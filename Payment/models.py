@@ -16,7 +16,7 @@ class Product(models.Model):
 class Transactions(models.Model): 
     item = models.ForeignKey(Product, blank=True, null=True, on_delete=models.CASCADE)
     contact = models.IntegerField(default=0)
-    amount = models.IntegerField(default=0)
+    amount = 1
     # create field 'code' which will contain the qr_code
     code = models.ImageField(upload_to='qr_codes', blank=True)
     # 'uuid' field to contain uuid
@@ -44,3 +44,6 @@ class Transactions(models.Model):
         canvas.close()
         # save
         super().save(*args, **kwargs)
+
+    
+    

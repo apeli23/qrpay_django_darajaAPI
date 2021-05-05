@@ -13,12 +13,10 @@ import os
 from pathlib import Path
  
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,12 +28,15 @@ SECRET_KEY = 'django-insecure-te)ljh1c)lzfoxl$9e_nwq1^xmgc7*7wcrz#jc=2gs0n9*bvle
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*'
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -125,6 +126,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/qr_codes/'
 MEDIA_ROOT = os.path.join(os.path.dirname(
-    BASE_DIR), "media_root")
+                BASE_DIR), "media_root")
+# 
+# STATIC_ROOT = os.path.join(BASE_DIR,  'static')
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = os.path.join(BASE_DIR, "static"),
+         
+STATIC_ROOT =os.path.join(BASE_DIR, "static","static-only")
+    
+# if DEBUG:
+    #Holds user generated contents eg imagefiles
+    #project css & javascript files will go to the 'static' directory
+    
+

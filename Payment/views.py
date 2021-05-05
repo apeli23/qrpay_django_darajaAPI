@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.http import HttpResponse
 import requests
@@ -6,6 +6,10 @@ from requests.auth import HTTPBasicAuth
 import json
 from .models import Product, Transactions
 import uuid
+from django.views import View
+from django.views.generic import TemplateView
+from django.contrib.auth.models import User
+
 
 # import our MpesaAccessToken and LipanaMpesaPpassword classes from mpesa_credentials.py file
 from . credentials import MpesaAccessToken, LipanaMpesaPpassword
@@ -74,3 +78,20 @@ def lipa_na_mpesa_online(request, id):
     # In my case, I respond with HTTP response success.
     return HttpResponse('success')
 
+def index_page(request):
+     
+    
+    return HttpResponse("This is a simple response !") 
+
+class indexView(TemplateView):
+    template_name = 'home/index.html'
+    def get(self,request ):
+        trx = Transactions.objects.all()
+        return render(request, self.template_name)
+
+    def post(self, request, pk):
+        trx = Transactions.objects.get(id=pk)
+        form = contactForm(request.POST)
+        trx.item = form.data['item']
+        trx.save()
+        return redirect('/index/')
