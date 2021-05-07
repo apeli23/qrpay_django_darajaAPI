@@ -13,51 +13,53 @@
 	<title>qr_Pay</title>
 	  
      
-	<!-- Custom fonts for this template-->
-    <!-- <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> -->
+	<!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   
     <!-- Custom styles for this template-->
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
-
-    
+     <link rel="stylesheet" href="{%static 'static/css/styles.css' %}">   
   
 </head>
-<body id=root>
-  <table border ="0">
-    <tr>
-      <td><img class="logo" src="{%static 'static/img/banner.png'%}"></td>
-       
-    </tr>
-  </table>
-  
-  <!-- <input width= 200px; height=200px; aria-invalid="false" placeholder="254........" type="number" value=""> -->
-        
-    <form action="." method="post">
-      {{ form  }}
-      {% csrf_token %}
-      
-     <div class="row justify-content-center col-12">
-      <button class="btn btn-primary" type="submit" data-dismiss="modal">Submit</button>
-      </div><br>
-      
-    </form>
-  <div class="divider"></div>
-    <!-- <img  width= 400px; height=400px; src="{%static 'static/img/fridge.jpg'%}" alt=""><button class="buy">Buy @6</button> 
-    <img width= 500px; height=400px; text-allign=right src="{%static 'static/img/headphones.webp'%}" alt=""><button class="buy">Buy @8</button>
-     -->
-    <!-- <img  width= 400px; src="{%static 'static/img/laptop.jpg'%}" alt=""><button class="buy">Buy @3</button> -->
-    <!-- <img  width= 400px; text-allign=right src="{%static 'static/img/speaker.jpg'%}" alt=""><button class="buy">Buy @9</button> -->  
-    <table border ="0">
-      <tr>
-        <td><img src="{%static 'static/img/speaker.jpg'%}"></td>
-        <td><img src="{%static 'static/img/headphones.webp'%}"></td>
-      </tr>
-      <tr>
-        <td><img src="{%static 'static/img/fridge.jpg'%}"></td>
-        <td><img src="{%static 'static/img/laptop.jpg'%}"></td>
-      </tr>
-    </table>
+<body>
+
+  <div class="header">
+    <div >
+      <img class="logo" src="{%static 'static/img/logo.png'%}"> <br><br>
+    <br><br><br>
+    <h1>QR-PAY</h1>
+    <div class="divider"></div>
+      <div class="container">
+        <table border ="10">
+          <tr>
+            <td>
+              <img src="{%static 'static/img/speaker.jpg'%}">
+              <form action="confirmpayment/{{trx.id}}" method="POST">
+                {% csrf_token %}                
+                {{ form.contact}} <br> 
+                <!-- <input class="ckbox" type="checkbox" name="chbox" value="1" onchange="valueChanged()"/><br>  -->
+                <div id="amountfield">{{form.amount}}</div>              
+                <div class="row justify-content-center col-12">
+                  <!-- <input type="submit" value="Save" class="btn btn-info col-4" /> -->
+                  <button type="submit">submit</button>
+                </div>
+              </form>
+            </td>
+            <td id="col1"><img src="{%static 'static/img/headphones.webp'%}"></td>
+          </tr>
+          <tr>
+            <td><img src="{%static 'static/img/fridge.jpg'%}"></td>
+            <td><img src="{%static 'static/img/laptop.jpg'%}"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
       
+  <script>
+    function myFunction() {
+    var x = document.getElementById("amountfield");
+    x.style.display = "none"; 
+    }
+  </script>
 </body>
 </html>

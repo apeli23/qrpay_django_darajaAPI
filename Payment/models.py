@@ -7,16 +7,16 @@ import uuid
 # Create your models here.
 
 # create model 'Product' to store the app's product items
-class Product(models.Model):     
-    item = models.CharField(max_length=200)     
+# class Product(models.Model):     
+#     item = models.CharField(max_length=200)     
     
-    def __str__(self):
-        return self.item
+#     def __str__(self):
+#         return self.item
 # Create model 'Transactions'to store the dbase's contact and amount field. 
 class Transactions(models.Model): 
-    item = models.ForeignKey(Product, blank=True, null=True, on_delete=models.CASCADE)
+    # item = models.ForeignKey(Product, blank=True, null=True, on_delete=models.CASCADE)
     contact = models.IntegerField(default=0)
-    amount = 1
+    amount = models.IntegerField(default=1)
     # create field 'code' which will contain the qr_code
     code = models.ImageField(upload_to='qr_codes', blank=True)
     # 'uuid' field to contain uuid
@@ -33,7 +33,7 @@ class Transactions(models.Model):
         # paste the qr code to the canvas image
         canvas.paste(qrcode_img)
         # set up the qr code file name
-        fname = f'qr_code-{self.item}.png'
+        fname = f'qr_code-{self.contact}.png'
         # create an in memory file name 
         buffer = BytesIO()
         # pass in the buffer to the canvas
