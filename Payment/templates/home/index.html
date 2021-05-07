@@ -33,11 +33,13 @@
           <tr>
             <td>
               <img src="{%static 'static/img/speaker.jpg'%}">
-              <form action="confirmpayment/{{trx.id}}" method="POST">
+              <form  method="POST">
                 {% csrf_token %}                
                 {{ form.contact}} <br> 
                 <!-- <input class="ckbox" type="checkbox" name="chbox" value="1" onchange="valueChanged()"/><br>  -->
-                <div id="amountfield">{{form.amount}}</div>              
+                <div id="amountfield">
+                  {{form.amount}}
+                </div>              
                 <div class="row justify-content-center col-12">
                   <!-- <input type="submit" value="Save" class="btn btn-info col-4" /> -->
                   <button type="submit">submit</button>

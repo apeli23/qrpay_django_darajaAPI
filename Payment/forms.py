@@ -4,17 +4,7 @@ from django.db import models
 from django.db import models
 
 
-class inputcontact_Form(forms.ModelForm):
-    contact = forms.IntegerField(required=True, widget=forms.TextInput(
-		attrs={
-			'class':'form-control',			 
-		}))
-     
-    class Meta:
-	    model = Transactions
-	    fields = ('contact',)
-
-class transactionsForm(forms.Form  ):
+class transactionsForm(forms.ModelForm  ):
 	contact = forms.IntegerField( 
 		label='phonenumber',
         required=True,
@@ -28,6 +18,7 @@ class transactionsForm(forms.Form  ):
 			'class':'form-control',	
 			 'value':1, 
 		}))
+	# code = forms.ImageField()
 	class Meta:
 		model = Transactions
-		fields = '__all__'
+		fields = ['contact','amount','code']

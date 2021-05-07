@@ -9,7 +9,7 @@ import uuid
 from django.views import View
 from django.views.generic import TemplateView
 from django.contrib.auth.models import User
-from .forms import inputcontact_Form, transactionsForm
+from .forms import transactionsForm
 
 # import our MpesaAccessToken and LipanaMpesaPpassword classes from mpesa_credentials.py file
 from . credentials import MpesaAccessToken, LipanaMpesaPpassword
@@ -77,28 +77,35 @@ def lipa_na_mpesa_online(request, id):
     # to redirect the user to a different page. 
     # In my case, I respond with HTTP response success.
     return HttpResponse('success')
+    
 
-# def index_page(request):
-#     template_name = 'home/index.html'
-#     def get(self, request, *args, **kwargs):
-         
-#         return render(request, self.template_name, {'form': transactionsForm()})
-         
-
+class paymentView(TemplateView):
+    template_name = 'home/payitem.html'
+    def get(self,request,pk):
+        trx = Transactions.objects.get(uuid=pk)
+        # data = {
+        # "trx" : Transactions.objects.get(uuid=pk),
+        # "form": transactionsForm()
+        # }
+        return render(request, self.template_name, {"data":Transactions.objects.get(uuid=pk), })
+    
 class indexView(TemplateView):
     template_name = 'home/index.html'
     def get(self,request ):
         trx = Transactions.objects.all()
         return render(request, self.template_name, {'form': transactionsForm()})
-
-    def post(self, request, pk):
+ 
+    def post(self,request):
         trx = Transactions()
         form = transactionsForm(request.POST)
+        trx.uuid = uuid.uuid4()
         trx.contact = form.data['contact']
         trx.amount = form.data['amount']
+        print(trx.uuid)
         trx.save()
-        return redirect('/api/v1/index/')  
- 
+        return redirect('/api/v1/payment/'+trx.uuid.hex)  
+
+
 class confirmpaymentView(TemplateView):
     template_name = 'home/confirm.html'
     def get(self, request, *args, **kwargs):
@@ -114,7 +121,7 @@ class confirmpaymentView(TemplateView):
         trx.amount = form.data['amount']
         trx.save()
         return redirect('api/v1/confirmpay/')
-        
+
 class confirmpaymentViewTest(TemplateView):
     template_name = 'home/confirm.html'
     def get(self, request, *args, **kwargs):
@@ -122,12 +129,12 @@ class confirmpaymentViewTest(TemplateView):
         return render(request, self.template_name, {'form': transactionsForm()})
          
         # return render(request, self.template_name,context)
-    # def post(self, request):
-    #     # trx = Transactions.objects.all()
-    #     trx = Transactions()
-    #     form = transactionsForm(request.POST)
-    #     # trx.item = form.data['item']
-    #     trx.contact = form.data['contact']
-    #     trx.amount = form.data['amount']
-    #     trx.save()
-    #     return redirect('/api/v1/index/')            
+    def post(self, request):
+        # trx = Transactions.objects.all()
+        trx = Transactions()
+        form = transactionsForm(request.POST)
+        # trx.item = form.data['item']
+        trx.contact = form.data['contact']
+        trx.amount = form.data['amount']
+        trx.save()
+        return redirect('/api/v1/index/')            
