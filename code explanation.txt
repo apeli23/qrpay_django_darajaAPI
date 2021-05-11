@@ -1,0 +1,86 @@
+            MODELS.PY
+4.qrcode field
+5.uuid field
+7.overwrite save function
+8.declare a dynamic url that triggers stk push. Replace '0.0.0.0:8000' ( :8000).Your computer will work as the server. 
+9.Map the link to the QR code
+line 10. construct a new image based on parameters size and color
+line 11. paste the qr code to the canvas image
+line 12: set up the qr code file name
+line 13: create an in memory file name 
+line 14:pass in the buffer to the canvas
+line 15:create a file object and pass it to the 'code' imagefield
+line 16:close the canvas
+line 17:save canvas
+
+
+	VIEWS.PY
+line 1:import a function called path which returns an element for inclusion in urlpatterns
+line 2:import all methods in our views.py file.
+line 6:define our URL which is pointed to our getAccessToken view.
+
+	CREDENTIALS.PY
+line1-5: file imports
+line 7: create a class called MpesaC2BCredential
+line 8: consumer_key variable
+line 9: consumer_secret variable
+line 10: URL variable for generating the mpesa token
+line 12-16: Well use the class to make a call to mpesa
+line 20: define the format of our transaction timestamp.
+line 21: we define our business Shortcode. Well use the test credentials provided by Safaricom Daraja sandbox.
+line 22: define the passkey, this information is found in Mpesa sandbox test credentials.
+line 24: define our password used to encrypt the request we send mpesa API STK push URL. 
+line 25: encode the password to base64 string.
+line 26: decode our password to UTF-8
+	
+	VIEWS: LIPA_NA_MPESA_ONLINE_FUNCTION
+line 1: define our STK push method called lipa_na_mpesa_online.
+line 2: get uuid
+line 3: get uuid model object
+line 4: get our mpesa access token
+line 5: define our STK push URL. Provided by Safaricom.
+line 6: define our headers where we pass our access token
+line 9:  pass our mpesa Shortcode.
+line 10: pass our mpesa password.
+line 11: define the transaction timestamp.
+line 12: define the transaction type. Since it’s STK push we use CustomerPayBillOnline
+line 13: define the amount, in this case, one shilling.
+line 14: define the phone number sending the money.
+line 15: define the organization shortcode receiving the funds.
+line 16: define the mobile number to receive STK pin prompt.
+line 17: define a valid URL which will receive notification from Mpesa-TOKEN.Note this should be your confirmation URL.
+line 18: define an identifier of the transaction.
+line 19: define the description of what the transaction is all about.
+line 22: get the response from Safaricom mpesa TOKEN.
+line 24: define a response, of course, you can choose to redirect the user to a different page. In my case, I respond with HTTP response success.
+
+	FORMS.PY
+LINE 1-3: Required imports
+line 8-17: contact field form
+line 18-24:amountfield form.Default value set to 1. 'value' attribute passes 1 as the default amount received in cosideration of the research purpose of this project. 
+line 25: code field form
+**Note** 'amount' and 'code' field widgets have been set to 'forms.HiddenInput'. This is because they wont be edited in the UI. 
+	The user will only be required to enter their phonenumber to make payent
+
+		TEMPLATE VIEW
+line 2: select 'index.html' temlate to contain a user's first UI interaction page.
+line 3: get function:model objects from database
+line 6: render view
+line 9: transaction model post function
+line 12: get transactionsForm(check forms.py)
+line 13: assign uuid to object
+line 14-15: feed transactionsForm() with respective data
+line 16: save post data
+line 17: redirect user to the qr 'payment' page
+line 20: selects 'payment.html' for the paymentView
+line 22: get specific uuid object
+line 23: render the object in the template
+		
+		APP/urls.py UPDATE:
+line 11: homepage directory
+line 12: redirect uniq model objects to payments view
+line 13: access token url
+line 14: initiate stk push url
+line 15: define successfull payment url
+
+

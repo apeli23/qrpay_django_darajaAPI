@@ -1,37 +1,32 @@
 body {
-    width: 90%;
-    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    margin: 26 auto;
+    display: grid;
+} 
+.logo {   
+    margin: 50px  600px;
+    height :0%;
+	width: 20%;     
 }
-header {
-    margin-top: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #b5b5b5;
-    position: relative;
-    height: 180px;
-    background-color: #331d35;
-}
-@media screen and (max-width: 1100px) {
-    .logo {
-        width: auto;
-        height: auto;
-        float: none;
-        padding: 22.5px 0px 0px 0px; /*to make it exactly to the center*/
-    }
-
-@media only screen and (min-width: 1170px) {
- .cd-header {
-   height: 180px;
+#centre  {
+    display: block;
+    margin: 150px  400px;
   }
+ 
+.row{
+    width: 1500px;
+    height: 500px;
 }
-.logo {
-    width: auto;
-    height: auto;
-    float:left;
-    padding:22.5px 0px 0px 10px;
-         
+form {
+    width: 550px;
+    height: 450px;
+     
 }
-div.logo{
-    margin: 0 auto;
-    width: 250px;
-    }
-        }
+ 
+.container{
+    background-color: rgb(131, 39, 216);
+    width: 100%;
+    height: 100%;
+}
+ 

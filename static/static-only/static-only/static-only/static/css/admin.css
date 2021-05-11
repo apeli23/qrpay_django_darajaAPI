@@ -15,4 +15,48 @@ header {
     top:0;
     content:""      
 }
+.wrapper{
+    width:100%;
+  }
   
+  img, .false-image{
+    max-width:100%;
+    margin:1em 0;
+    
+    &.center{
+      margin:1em auto;
+      display:block;
+    }
+  }
+  
+  .row{
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    .img{
+      flex: 0 1 300px
+    }
+  }
+  .justify-content-center{
+    justify-content:center;
+    
+  }
+  
+  .false-image{
+    width:100%;
+    padding-bottom:10.5%
+  }
+  
+  .background-centered{
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:50%;
+  }
+  
+  .grid{
+    display:grid
+  }
+  .grid.grid-center{
+    justify-content:center;
+    align-items:center;
+  }

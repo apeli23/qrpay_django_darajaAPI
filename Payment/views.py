@@ -72,69 +72,46 @@ def lipa_na_mpesa_online(request, id):
 
      # get the response from Safaricom mpesa TOKEN.
     response = requests.post(api_url, json=request, headers=headers)
-    # print(response)
+   
     # define a response, of course, you can choose 
     # to redirect the user to a different page. 
     # In my case, I respond with HTTP response success.
     return HttpResponse('success')
     
 
-class paymentView(TemplateView):
-    template_name = 'home/payitem.html'
-    def get(self,request,pk):
-        trx = Transactions.objects.get(uuid=pk)
-        # data = {
-        # "trx" : Transactions.objects.get(uuid=pk),
-        # "form": transactionsForm()
-        # }
-        return render(request, self.template_name, {"data":Transactions.objects.get(uuid=pk), })
-    
 class indexView(TemplateView):
+    # select 'index.html' temlate to contain a user's first UI interaction page.
     template_name = 'home/index.html'
+    # get function
     def get(self,request ):
+        # get model objects from database
         trx = Transactions.objects.all()
+        # rendered view
         return render(request, self.template_name, {'form': transactionsForm()})
- 
+    
+    # post function
     def post(self,request):
+        # use transaction model
         trx = Transactions()
+        # post in transactionsForm(check forms.py)
         form = transactionsForm(request.POST)
+        # assign uuid to object
         trx.uuid = uuid.uuid4()
+        # trx= feed the forms with the following data
         trx.contact = form.data['contact']
         trx.amount = form.data['amount']
-        print(trx.uuid)
+        # save data
         trx.save()
+        # redirect user to the qr 'payment' page
         return redirect('/api/v1/payment/'+trx.uuid.hex)  
 
 
-class confirmpaymentView(TemplateView):
-    template_name = 'home/confirm.html'
-    def get(self, request, *args, **kwargs):
-         
-        return render(request, self.template_name, {'form': transactionsForm()})
-         
-        # return render(request, self.template_name,context)
-    def post(self, request):
-        trx = Transactions.objects.all()
-        form = transactionsForm(request.POST)
-        trx.item = form.data['item']
-        trx.contact = form.data['contact']
-        trx.amount = form.data['amount']
-        trx.save()
-        return redirect('api/v1/confirmpay/')
-
-class confirmpaymentViewTest(TemplateView):
-    template_name = 'home/confirm.html'
-    def get(self, request, *args, **kwargs):
-         
-        return render(request, self.template_name, {'form': transactionsForm()})
-         
-        # return render(request, self.template_name,context)
-    def post(self, request):
-        # trx = Transactions.objects.all()
-        trx = Transactions()
-        form = transactionsForm(request.POST)
-        # trx.item = form.data['item']
-        trx.contact = form.data['contact']
-        trx.amount = form.data['amount']
-        trx.save()
-        return redirect('/api/v1/index/')            
+class paymentView(TemplateView):
+    # select 'payment.html' template to contain the generated QR code
+    template_name = 'home/payitem.html'
+    def get(self,request,pk):
+        # get specific uuid object
+        trx = Transactions.objects.get(uuid=pk)
+    #    render the object in the template
+        return render(request, self.template_name, {"data":Transactions.objects.get(uuid=pk), })
+    

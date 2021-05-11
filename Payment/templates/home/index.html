@@ -1,5 +1,6 @@
 
 	{%load static%}
+  {% load crispy_forms_filters %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,51 +18,28 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   
     <!-- Custom styles for this template-->
-     <link rel="stylesheet" href="{%static 'static/css/styles.css' %}">   
-  
-</head>
-<body>
-
-  <div class="header">
-    <div >
-      <img class="logo" src="{%static 'static/img/logo.png'%}"> <br><br>
-    <br><br><br>
-    <h1>QR-PAY</h1>
-    <div class="divider"></div>
-      <div class="container">
-        <table border ="10">
-          <tr>
-            <td>
-              <img src="{%static 'static/img/speaker.jpg'%}">
-              <form  method="POST">
-                {% csrf_token %}                
-                {{ form.contact}} <br> 
-                <!-- <input class="ckbox" type="checkbox" name="chbox" value="1" onchange="valueChanged()"/><br>  -->
-                <div id="amountfield">
-                  {{form.amount}}
-                </div>              
-                <div class="row justify-content-center col-12">
-                  <!-- <input type="submit" value="Save" class="btn btn-info col-4" /> -->
-                  <button type="submit">submit</button>
-                </div>
-              </form>
-            </td>
-            <td id="col1"><img src="{%static 'static/img/headphones.webp'%}"></td>
-          </tr>
-          <tr>
-            <td><img src="{%static 'static/img/fridge.jpg'%}"></td>
-            <td><img src="{%static 'static/img/laptop.jpg'%}"></td>
-          </tr>
-        </table>
+    <link rel="stylesheet" href="{%static 'static/css/styles.css' %}">   
+    <link rel="stylesheet" href="{%static 'static/bootstrap/css/bootstrap.min.css' %}">
+<body >
+  <div >
+    <!-- Form to feed database -->
+    <form  method="POST">
+      {% csrf_token %} 
+      <div class="contact"> 
+      <img class="logo" src="{% static 'static/img/favicon.ico.'%}">
+      <!-- display forms -->
+      {{ form }}  
       </div>
+    <div class="row" >
+      <!-- display product images -->
+      <img width=250px; height=300px; src="{% static 'static/img/headphone.png'%}" alt=""><button type="submit">Buy</button>
+      <img width=400px; height=400px; src="{% static 'static/img/headphones.webp'%}" alt=""><button type="submit">Buy</button>
+      <img width=400px; height=350px; src="{% static 'static/img/ps5.png'%}" alt=""><button type="submit">Buy</button>
+      <img width=350px; height=300px; src="{% static 'static/img/speaker.jpg'%}" alt=""><button type="submit">Buy</button>
+      <img width=400px; height=350px; src="{% static 'static/img/fridge.jpg'%}" alt=""><button type="submit">Buy</button>
+      <img width=300px; height=400px; src="{% static 'static/img/xctrl.jpg'%}" alt=""><button type="submit">Buy</button>
     </div>
-  </div>
-      
-  <script>
-    function myFunction() {
-    var x = document.getElementById("amountfield");
-    x.style.display = "none"; 
-    }
-  </script>
+  </form>
+</div>
 </body>
 </html>
